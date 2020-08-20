@@ -1,14 +1,15 @@
-import abc
-import database as db
-
-from sqlalchemy.sql import func
+import lib.database as db
 
 from datetime import datetime
 from lib.utils.unique_identifier import generate_id
 
 
-class classproperty(object):
+class class_property(object):
 
+    # This class property is inspired from the behaviour of flaskSqlAlchemy
+    # The behaviour of querying directly a model User.query.. is nice, but
+    # the flaskSqlAlchemy dependency is not, so the behaviour is reproduced
+    # with this trick of class property
     def __init__(self, fget):
         self.fget = fget
 
@@ -86,7 +87,10 @@ class BaseModel(db.Base):
         db.session.add(self)
         db.session.commit()
 
-    @classproperty
+    @class_property
     def query(cls):
         return db.session.query(cls)
 
+    @class_property
+    def session(cls):
+        return db.session
