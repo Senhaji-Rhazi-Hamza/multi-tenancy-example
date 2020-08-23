@@ -1,4 +1,3 @@
-from config import SELECTED_SCHEMA, SCHEMAS
 from flask import request
 from lib.models import db
 
