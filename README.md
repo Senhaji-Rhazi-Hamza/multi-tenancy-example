@@ -1,7 +1,7 @@
 # Multi Tenancy Example
 This repo aims to show how to implement a multi-tenancy architecture using postgres/sqlAlchemy/python/flask
 
-A detailled medium [article]() throught a hypothetical use case, and explains the step in order to comprehend the architecture
+A detailled medium [article](https://medium.com/@hamza.senhajirhazi/how-to-handle-schema-multi-tennancy-with-python-flask-sqlalchemy-postgres-7000dda10749) throught a hypothetical use case, and explains the step in order to comprehend the architecture
 
 ## Usage and test
 
