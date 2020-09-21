@@ -1,12 +1,11 @@
 import os
 
 from flask import Flask, jsonify, request
-from lib.models import User, init_app as models_init_app
+from lib.models import User
 from lib.schema import setup as setup_schema_selection
 
 app = Flask(__name__)
 
-models_init_app(app)
 setup_schema_selection(app)
 
 

@@ -6,19 +6,6 @@ from lib.models.order import Order
 from lib.utils.classes import all_subclasses
 
 
-def open_new_session():
-    db.session = db.gen_session()
-
-
-def close_session(exc):
-    if db.session.is_active:
-        db.session.close()
-
-
-def init_app(app):
-    app.before_request(open_new_session)
-    app.teardown_request(close_session)
-
 # create the tables if not creae
 
 

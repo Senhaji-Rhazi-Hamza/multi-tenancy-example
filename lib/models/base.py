@@ -1,5 +1,4 @@
 import lib.database as db
-
 from datetime import datetime
 from lib.utils.unique_identifier import generate_id
 
@@ -38,10 +37,12 @@ class BaseModel(db.Base):
     def delete_all(cls):
         db.session.query(cls).delete()
         db.session.commit()
+        db.session.close()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+        db.session.close()
 
     @classmethod
     def get_by_id(cls, uid):
@@ -86,11 +87,17 @@ class BaseModel(db.Base):
     def save(self):
         db.session.add(self)
         db.session.commit()
+        db.session.close()
 
     @class_property
     def query(cls):
-        return db.session.query(cls)
+        return cls.session.query(cls)
 
     @class_property
     def session(cls):
-        return db.session
+        session = db.gen_session()
+        if hasattr(cls, 'has_request_context') and cls.has_request_context():
+            session.connection(
+            execution_options={"schema_translate_map": {None: cls.get_organization_id()}}
+            )
+        return session

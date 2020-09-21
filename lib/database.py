@@ -10,7 +10,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, event, MetaData
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from sqlalchemy.inspection import inspect
 from sqlalchemy import DDL
 
@@ -29,11 +29,9 @@ for schema in SCHEMAS:
         DDL("CREATE SCHEMA IF NOT EXISTS " + schema)
     )
 
-gen_session = sessionmaker(bind=engine)
-connection = engine.connect().execution_options(
-  schema_translate_map={None: SELECTED_SCHEMA}
-  )
-session = gen_session(bind=connection)
+session_factory = sessionmaker(bind=engine)
+gen_session = scoped_session(session_factory)
+session = gen_session()
 
 __all__ = [
     "Integer",
