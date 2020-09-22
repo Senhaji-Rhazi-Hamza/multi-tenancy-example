@@ -37,12 +37,10 @@ class BaseModel(db.Base):
     def delete_all(cls):
         db.session.query(cls).delete()
         db.session.commit()
-        db.session.close()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-        db.session.close()
 
     @classmethod
     def get_by_id(cls, uid):
@@ -87,7 +85,6 @@ class BaseModel(db.Base):
     def save(self):
         db.session.add(self)
         db.session.commit()
-        db.session.close()
 
     @class_property
     def query(cls):
